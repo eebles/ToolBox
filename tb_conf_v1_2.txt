@@ -1,10 +1,8 @@
 @name TB_Conf_v1_2
 @inputs 
 @outputs 
-@persist [Holos, Count, I, Run]:number TargPly:entity [Target, KTarget, ChatStr, Aids]:string
+@persist [Holos, Count, I, Run]:number TargPly:entity [Target, KTarget, ChatStr]:string
 @strict
-
-Aids = "stop"
 
 function ps(PN:string, Msg:string){
     NStr = ""
