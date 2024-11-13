@@ -49,6 +49,9 @@ if(chatClk(O)){
         modifyChat("")
         Args = (Arg1 + " " + Arg2)
     }
+    else{
+        break
+    }
     
     if(Cmd == "_tbx_run"){
         OID = O:steamID()
@@ -201,12 +204,11 @@ if(chatClk(O)){
         }
     }
     
-    elseif(Cmd == "_mute"){
-        mute(Arg1:toNumber())
-    }
-    
     elseif(Cmd == "_h" | Cmd == "_help"){
         tbhelp()
+    }
+    elseif(Delim == "_"){
+        print("\n[TB]: ERROR | Invalid command.")
     }
 }
 

