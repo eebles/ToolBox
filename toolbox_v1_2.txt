@@ -196,7 +196,7 @@ if(chatClk(O)){
         }
         
         else{
-            print("\n[TB]: Logger off. Reseting E2 . . .")
+            print("\n[TB]: Logger off. Resetting E2 . . .")
             reset()
         }
     }

