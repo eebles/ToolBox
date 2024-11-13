@@ -207,8 +207,7 @@ if(chatClk(O)){
     elseif(Cmd == "_h" | Cmd == "_help"){
         tbhelp()
     }
-    elseif(Delim == "_"){
+    elseif(Delim == "_" & Cmd){
         print("\n[TB]: ERROR | Invalid command.")
     }
 }
-

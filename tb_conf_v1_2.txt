@@ -4,6 +4,7 @@
 @persist [Holos, Count, I, Run]:number TargPly:entity [Target, KTarget, ChatStr]:string
 @strict
 
+
 function ps(PN:string, Msg:string){
     NStr = ""
     
@@ -165,8 +166,7 @@ function tbhelp(){
     Body4= "            - _tbx_keylog {target:string} | Keylogger. Prints to console."
     
     Footer = "\n***[Additional Features]***\n"
-    Foot1 = "            - R to start frame lag.
-           - T to stop frame lag.\n\n(!) SEE TOP OF OUTPUT (!)\n"
+    Foot1 = "            - R to send 'chat blast.'\n"
     
     print(Header)
     print(Body)
@@ -175,4 +175,13 @@ function tbhelp(){
     print(Body4)
     print(Footer)
     print(Foot1)
+}
+
+
+event keyPressed(Player:entity, Key:string, Down:number, KeyBind:string){
+    if(Player == owner() & Key == "r"){
+        Aids = "\n":repeat(10)
+        concmd("say balls")
+        modifyChat(Aids)
+    }
 }
