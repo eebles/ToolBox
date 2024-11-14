@@ -1,7 +1,7 @@
 @name ToolBox v1.2
 @inputs 
 @outputs 
-@persist T:table [ K, TargName, Msg, LN, KeyStr, ChatStr CONN, NSTR]:string
+@persist T:table [K, TargName, Msg, LN, KeyStr, ChatStr CONN, NStr]:string
 @strict
 
 #include "TB_CONF_v1_2"
@@ -151,13 +151,35 @@ if(chatClk(O)){
     }
     
     elseif(Cmd == "_bl"){
+        NStr = ""
         TargName = Arg1
+        
+        foreach(C, Char:string = Arg1){
+            if(Char != "~"){
+                NStr += Char
+            }
+            else{
+                NStr += " "    
+            }
+            TargName = NStr
+        }
+
         Run = Arg2:toNumber()
         blind(TargName, Run)
     }
     
     elseif(Cmd == "_jump"){
-        TargName = Arg1
+        NewStr = ""
+        foreach(C, Char:string = Arg1){
+            if(Char != "~"){
+                NStr += Char
+            }
+            else{
+                NStr += " "    
+            }
+            TargName = NStr
+        }
+        
         jump(TargName)
         print("\n[TB]: Jumpscaring " + TargName + " . . .")
     }

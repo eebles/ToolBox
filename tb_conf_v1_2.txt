@@ -75,44 +75,26 @@ function blind(TargName:string, Run:number){
             print("\n[TB]: Blinding " + TargName + " . . .")
             holoPos(Bl, Targ:pos() + vec(0,0,50))
             holoColor(Bl, vec(0,0,0))
-            
-            for(I=1, 100, 1){
-                Blinder:emitSound("Town.d1_town_02a_fz_scream1")
-                
-                if(Run == 0){
-                    I = 100
-                }
-                else{
-                    I -= 1
-                }
-            }
+            Blinder:emitSound("Town.d1_town_02a_fz_scream1")
         }
     }
     
     else{
+        X = 1
         foreach(P, Ply:entity = players()){
             holoModelAny()
-            holoCreate(P)
-            Blinder = holoEntity(P)
-            holoMaterial(P, "debug/debugportals")
-            holoParent(P, Ply)
-            holoModel(P, "sphere")
-            holoScale(P, vec(-30))
-            holoVisible(P, Ply, 1)
-            holoAlpha(P, 255)
-            holoPos(P, Ply:pos() + vec(0,0,50))
-            holoColor(P, vec(0,0,0))
-            
-            for(I=1, 100, 1){
-                Blinder:emitSound("Town.d1_town_02a_fz_scream1")
-                
-                if(Run == 0){
-                    I = 100
-                }
-                else{
-                    I -= 1
-                }
-            }
+            holoCreate(X)
+            Blinder = holoEntity(X)
+            holoMaterial(X, "debug/debugportals")
+            holoParent(X, Ply)
+            holoModel(X, "sphere")
+            holoScale(X, vec(-30))
+            holoVisible(X, Ply, 1)
+            holoAlpha(X, 255)
+            holoPos(X, Ply:pos() + vec(0,0,50))
+            holoColor(X, vec(0,0,0))
+            X += 1
+            Blinder:emitSound("Town.d1_town_02a_fz_scream1")
         }
     }
 }
@@ -181,7 +163,7 @@ function tbhelp(){
 event keyPressed(Player:entity, Key:string, Down:number, KeyBind:string){
     if(Player == owner() & Key == "r"){
         Aids = "\n":repeat(10)
-        concmd("say balls")
+        concmd("say .\n")
         modifyChat(Aids)
     }
 }
