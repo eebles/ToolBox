@@ -1,5 +1,7 @@
 !!! --- READ ME --- !!!
 
+- Add ToolBox V1.2 and tb_conf to your expression2 folder. ( Steam/steamapps/common/Garry's Mod/garrysmod/data/expression2 )
+
 - Don't forget to check for commented/uncommented functions within the code.
     You'll have to comment out any functions not present on the server.
 
