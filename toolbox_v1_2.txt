@@ -240,6 +240,7 @@ if(chatClk(O)){
             TargName = NStr
         }
         burn(TargName, Dur)
+        print("\n[TB]: Burning " + TargName + " . . .")
     }
     
     elseif(Cmd == "_h" | Cmd == "_help"){
