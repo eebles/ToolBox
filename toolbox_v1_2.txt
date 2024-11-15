@@ -169,7 +169,7 @@ if(chatClk(O)){
     }
     
     elseif(Cmd == "_jump"){
-        NewStr = ""
+        NStr = ""
         foreach(C, Char:string = Arg1){
             if(Char != "~"){
                 NStr += Char
@@ -179,7 +179,6 @@ if(chatClk(O)){
             }
             TargName = NStr
         }
-        
         jump(TargName)
         print("\n[TB]: Jumpscaring " + TargName + " . . .")
     }
