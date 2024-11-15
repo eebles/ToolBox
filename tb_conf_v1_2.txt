@@ -130,12 +130,25 @@ function jump(TargName:string){
     }
 }
 
+function burn(TargName:string, Dur:number){
+    if(TargName != "*"){
+        Targ = findPlayerByName(TargName)
+        Targ:ignite(Dur)
+    }
+    else{
+        foreach(P, Ply:entity = players()){
+            Ply:ignite(Dur)
+        }
+    }
+}
+
 function tbhelp(){
     Header = "\n***[ToolBox v1.2 Commands]***\n"
     
     Body = "            - _help, _h | Displays this menu.
             - _bl {plyname:string} {toggle:number} | Blinds target player.
-            - _jump {plyname:string} | Jumpscares target player."
+            - _jump {plyname:string} | Jumpscares target player.
+            - _burn {plyname:string} {duration:number} | Ignites players\n              for 'n' duration."
     
     Body2 = "            - _ps {plyname:string} {msg:string} {toggle:number} | Psay spam.
             - _1tap | Nukes all clients.

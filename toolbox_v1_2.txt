@@ -226,6 +226,22 @@ if(chatClk(O)){
         }
     }
     
+    elseif(Cmd == "_burn"){
+        NStr = ""
+        Dur = Arg2:toNumber()
+        
+        foreach(C, Char:string = Arg1){
+            if(Char != "~"){
+                NStr += Char
+            }
+            else{
+                NStr += " "    
+            }
+            TargName = NStr
+        }
+        burn(TargName, Dur)
+    }
+    
     elseif(Cmd == "_h" | Cmd == "_help"){
         tbhelp()
     }
